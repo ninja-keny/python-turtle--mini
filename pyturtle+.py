@@ -63,6 +63,10 @@ goy = []
 looping = []
 ls = 0
 
+value = 0
+list_add = []
+add_off = True
+
 run = True
 loop_on = False
 function_on = False
@@ -251,8 +255,43 @@ while run:
         else:
             print("make sure you have a start function command at the top")
 
+    elif line == "addition":
+      add_inputs = input("type the numbers you want to add and to seperate them use spaces ")
+      list_add = add_inputs.split()
+      for i in range(0,len(list_add)):
+        list_add[i] = int(list_add[i])
+        value = list_add[i] + value
+      print("the value is: " + str(value))
+
+    elif line == "subtraction":
+      subtract_inputs = input("type the numbers you want to subtract and to seperate them use spaces ")
+      list_subtract = subtract_inputs.split()
+      value = int(list_subtract[0])
+      for i in range(1 , len(list_subtract)):
+        list_subtract[i] = int(list_subtract[i])
+        value = value - list_subtract[i]
+      print("the value is: " + str(value))
+
+    elif line == "multiplication":
+        multiply_inputs = input("type the numbers you want to multiply a0nd to seperate them use spaces ")
+        list_multiply = multiply_inputs.split()
+        value = int(list_multiply[0])
+        for i in range(1 , len(list_multiply)):
+            list_multiply[i] = int(list_multiply[i])
+            value = value * list_multiply[i]
+        print("the value is: " + str(value))
+
+    elif line == "division":
+        divide_inputs = input("type the numbers you want to divide and to seperate them use spaces ")
+        list_divide = divide_inputs.split()
+        value = int(list_divide[0])
+        for i in range(1 , len(list_divide)):
+            list_divide[i] = int(list_divide[i])
+            value = value / list_divide[i]
+        print("the value is: " + str(value))
+
     else:
-        code.append(line)
+        print("\033[31myour code will not run since it is not a proper command\033[0m")
 
 # EXECUTION
 i = 0

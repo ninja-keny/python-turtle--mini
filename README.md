@@ -5,3 +5,5 @@ People who are more advanced can use my programming language to code quick and e
 
 fetures:
 1.if you want the turtle to move forwards you have to type forwards and enter the distance
+
+2.if you want the turtle to turn right you have to type right and how much degrees you want it to turn

@@ -1,5 +1,8 @@
 import turtle
 
+# varibles values
+varible_value = {}
+
 # Function value dictionaries
 f_forward = {}
 f_backward = {}
@@ -23,12 +26,6 @@ l_goy_dict = {}
 loop_list = {}
 loop = []
 loop_index = 0
-
-valid_commands = [
-    "forward","backward","right","left",
-    "penup","pendown","color","pensize","goto",
-    "start_loop","end_loop","start_function","end_function"
-]
 
 # global counters
 loop_n = loop_o = loop_q = loop_k = loop_l = loop_ps = loop_xs = loop_ys = 0
@@ -81,23 +78,52 @@ while run:
         run = False
 
     elif line == "forward":
-        try:
-            forward_num = int(input("how much steps do you want the turtle to move"))
-            if loop_on:
+            forward_num = input("how much steps do you want the turtle to move ")
+            try:
+             forward_num = int(forward_num)
+             if loop_on:
                 loop.append("forward")
                 l_forward[str(loop_index)].append(forward_num)
-            elif function_on:
+             elif function_on:
                 f_info.append("forward")
                 f_forward[function_name].append(forward_num)
-            else:
+             else:
                 forward_distance.append(forward_num)
                 code.append("forward")
-        except:
-            print("syntax error make sure you typed a number")
+            except:
+               try:
+                  forward_num = float(forward_num)
+               except:
+                if forward_num in varible_value:
+                  forward_num = varible_value[forward_num]
+                  if loop_on:
+                   loop.append("forward")
+                   l_forward[str(loop_index)].append(forward_num)
+                  elif function_on:
+                   f_info.append("forward")
+                   f_forward[function_name].append(forward_num)
+                  else:
+                   forward_distance.append(forward_num)
+                   code.append("forward")
+                else:                
+                 print("syntax error make sure you typed a number or varible")
 
     elif line == "backward":
+     backward_num = input("how much steps do you want the turtle to move ")
+     try:
+        backward_num = int(backward_num)
+        if loop_on:
+            loop.append("backward")
+            l_backward[str(loop_index)].append(backward_num)
+        elif function_on:
+            f_info.append("backward")
+            f_backward[function_name].append(backward_num)
+        else:
+            backward_distance.append(backward_num)
+            code.append("backward")
+     except:
         try:
-            backward_num = int(input("how much steps do you want the turtle to move backward"))
+            backward_num = float(backward_num)
             if loop_on:
                 loop.append("backward")
                 l_backward[str(loop_index)].append(backward_num)
@@ -108,11 +134,36 @@ while run:
                 backward_distance.append(backward_num)
                 code.append("backward")
         except:
-            print("syntax error make sure you typed a number")
+            if backward_num in varible_value:
+                backward_num = varible_value[backward_num]
+                if loop_on:
+                    loop.append("backward")
+                    l_backward[str(loop_index)].append(backward_num)
+                elif function_on:
+                    f_info.append("backward")
+                    f_backward[function_name].append(backward_num)
+                else:
+                    backward_distance.append(backward_num)
+                    code.append("backward")
+            else:
+                print("syntax error make sure you typed a number or varible")
 
     elif line == "right":
-        try:
-            right_num = int(input("how much degrees do you want the turtle to turn right"))
+     right_num = input("how much degrees do you want the turtle to turn right ")
+     try:
+        right_num = int(right_num)
+        if loop_on:
+            loop.append("right")
+            l_right[str(loop_index)].append(right_num)
+        elif function_on:
+            f_info.append("right")
+            f_right[function_name].append(right_num)
+        else:
+            right_turns.append(right_num)
+            code.append("right")
+     except:
+         try:
+            right_num = float(right_num)
             if loop_on:
                 loop.append("right")
                 l_right[str(loop_index)].append(right_num)
@@ -122,12 +173,37 @@ while run:
             else:
                 right_turns.append(right_num)
                 code.append("right")
-        except:
-            print("syntax error make sure you typed a number")
-
+         except:
+            if right_num in varible_value:
+                right_num = varible_value[right_num]
+                if loop_on:
+                    loop.append("right")
+                    l_right[str(loop_index)].append(right_num)
+                elif function_on:
+                    f_info.append("right")
+                    f_right[function_name].append(right_num)
+                else:
+                    right_turns.append(right_num)
+                    code.append("right")
+            else:
+                print("syntax error make sure you typed a number or varible")
+    
     elif line == "left":
+     left_num = input("how much degrees do you want the turtle to turn left ")
+     try:
+        left_num = int(left_num)
+        if loop_on:
+            loop.append("left")
+            l_left[str(loop_index)].append(left_num)
+        elif function_on:
+            f_info.append("left")
+            f_left[function_name].append(left_num)
+        else:
+            left_turns.append(left_num)
+            code.append("left")
+     except:
         try:
-            left_num = int(input("how much steps do you want the turtle to turn left"))
+            left_num = float(left_num)
             if loop_on:
                 loop.append("left")
                 l_left[str(loop_index)].append(left_num)
@@ -138,7 +214,20 @@ while run:
                 left_turns.append(left_num)
                 code.append("left")
         except:
-            print("syntax error make sure you typed a number")
+            if left_num in varible_value:
+                left_num = varible_value[left_num]
+                if loop_on:
+                    loop.append("left")
+                    l_left[str(loop_index)].append(left_num)
+                elif function_on:
+                    f_info.append("left")
+                    f_left[function_name].append(left_num)
+                else:
+                    left_turns.append(left_num)
+                    code.append("left")
+            else:
+                print("syntax error make sure you typed a number or varible")
+
 
     elif line == "penup":
         if loop_on:
@@ -255,41 +344,130 @@ while run:
         else:
             print("make sure you have a start function command at the top")
 
+    elif line in functions_name:
+     code.append(line)
+
     elif line == "addition":
       add_inputs = input("type the numbers you want to add and to seperate them use spaces ")
       list_add = add_inputs.split()
-      for i in range(0,len(list_add)):
-        list_add[i] = int(list_add[i])
-        value = list_add[i] + value
-      print("the value is: " + str(value))
+      value = 0
+      for x in range (len(list_add)):
+       try:
+          list_add[x] = int(list_add[x])
+       except:
+        try:
+          list_add[x] = float(list_add[x])
+        except: 
+           if list_add[x] in varible_value:
+              list_add[x] = varible_value[list_add[x]]
+           else:
+              pass
+              
+      for i in range (len(list_add)):
+       try:
+         value = list_add[i] + value
+         if i == len(list_add)-1:
+          print("the value is " + str(value))
+       except:
+        print(str(list_add[i]) + " is not a number or varible or decimal or the varibal is a string")
+      
 
     elif line == "subtraction":
       subtract_inputs = input("type the numbers you want to subtract and to seperate them use spaces ")
       list_subtract = subtract_inputs.split()
-      value = int(list_subtract[0])
-      for i in range(1 , len(list_subtract)):
-        list_subtract[i] = int(list_subtract[i])
-        value = value - list_subtract[i]
-      print("the value is: " + str(value))
+      for x in range(0, len(list_subtract)):
+             try:
+              list_subtract[x] = int(list_subtract[x])
+             except:
+              try:
+               list_subtract[x] = float(list_subtract[x])
+              except:
+               if list_subtract[x] in varible_value:
+                list_subtract[x] = varible_value[list_subtract[x]]
+               else:
+                print(str(list_subtract[0]) + " is not a varible or a number or a decimall or varibal is a string")
+      value = list_subtract[0]
+      for a in range(1 , len(list_subtract)):
+       try:
+        value = value - list_subtract[a]
+        if a == len(list_subtract)-1:
+         print("the value is: " + str(value))
+       except:
+         print(str(list_subtract[a]) + " is not a varible or a number or a decimall or varibal is a string")
 
     elif line == "multiplication":
-        multiply_inputs = input("type the numbers you want to multiply a0nd to seperate them use spaces ")
-        list_multiply = multiply_inputs.split()
-        value = int(list_multiply[0])
-        for i in range(1 , len(list_multiply)):
-            list_multiply[i] = int(list_multiply[i])
+     multiply_inputs = input("type the numbers you want to multiply and to seperate them use spaces ")
+     list_multiply = multiply_inputs.split()
+
+     # convert each item safely
+     for x in range(len(list_multiply)):
+        try:
+            list_multiply[x] = int(list_multiply[x])
+        except:
+            try:
+                list_multiply[x] = float(list_multiply[x])
+            except:
+                if list_multiply[x] in varible_value:
+                    list_multiply[x] = varible_value[list_multiply[x]]
+                else:
+                    print(str(list_multiply[x]) + " is not a varible or a number or a decimall or varibal is a string")
+                    break
+
+     # start with the first value
+     value = list_multiply[0]
+
+     # multiply through the rest
+     for i in range(1, len(list_multiply)):
+        try:
             value = value * list_multiply[i]
-        print("the value is: " + str(value))
+            if i == len(list_multiply) - 1:
+                print("the value is: " + str(value))
+        except:
+            print(str(list_multiply[i]) + " is not a varible or a number or a decimall or varibal is a string")
+
 
     elif line == "division":
-        divide_inputs = input("type the numbers you want to divide and to seperate them use spaces ")
-        list_divide = divide_inputs.split()
-        value = int(list_divide[0])
-        for i in range(1 , len(list_divide)):
-            list_divide[i] = int(list_divide[i])
-            value = value / list_divide[i]
-        print("the value is: " + str(value))
+     divide_inputs = input("type the numbers you want to divide and to seperate them use spaces ")
+     list_divide = divide_inputs.split()
 
+    # convert each item safely
+     for x in range(len(list_divide)):
+        try:
+            list_divide[x] = int(list_divide[x])
+        except:
+            try:
+                list_divide[x] = float(list_divide[x])
+            except:
+                if list_divide[x] in varible_value:
+                    list_divide[x] = varible_value[list_divide[x]]
+                else:
+                    print(str(list_divide[x]) + " is not a varible or a number or a decimall or varibal is a string")
+                    break
+
+    # start with the first value
+     value = list_divide[0]
+
+    # divide through the rest
+     for i in range(1, len(list_divide)):
+        try:
+            value = value / list_divide[i]
+            if i == len(list_divide) - 1:
+                print("the value is: " + str(value))
+        except:
+            print(str(list_divide[i]) + " is not a varible or a number or a decimall or varibal is a string")
+
+
+    elif line == "varible":
+     varible_name = input("what do you want your varible name to be ")
+     varible_input = input("type the value of your varible ")
+     try:
+      varible_input = int(varible_input)
+     except:
+      try:
+       varible_input = float(varible_input)
+      except:
+        varible_input = str(varible_input)
+     varible_value[varible_name] = varible_input
     else:
         print("\033[31myour code will not run since it is not a proper command\033[0m")
 

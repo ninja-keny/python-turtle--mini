@@ -74,6 +74,7 @@ while run:
     line = input("line "+str(line_name)+":")
     line_name += 1
 
+    # if user types run to run the code
     if line == "run":
         run = False
 
@@ -246,8 +247,21 @@ while run:
             code.append("pendown")
 
     elif line == "color":
-        turtle_color = input("what color do you want the turtle to be")
-        if turtle_color in color_list:
+         turtle_color = input("what color do you want the turtle to be")
+         if turtle_color in varible_value:
+          if varible_value[turtle_color] in color_list:
+            if loop_on:
+                loop.append("color")
+                l_color[str(loop_index)].append(varible_value[turtle_color])
+            elif function_on:
+                f_info.append("color")
+                f_color[function_name].append(varible_value[turtle_color])
+            else:
+                color_chosen.append(varible_value[turtle_color])
+                code.append("color")
+          else:
+             print("error: has to be a string it cant be a number or decimal or your varible is not a color")
+         elif turtle_color in color_list:
             if loop_on:
                 loop.append("color")
                 l_color[str(loop_index)].append(turtle_color)
@@ -257,9 +271,8 @@ while run:
             else:
                 color_chosen.append(turtle_color)
                 code.append("color")
-        else:
-            print("syntax error: make sure you type a color")
-
+         else:
+            print("syntax error: make sure you type a color or your varible is not a color")
     elif line == "pensize":
         try:
             size = int(input("what pen size do you want"))
@@ -276,24 +289,103 @@ while run:
             print("syntax error make sure you typed a number")
 
     elif line == "goto":
-        try:
-            x_axis = int(input("where do you want the turtle x axis to be"))
-            y_axis = int(input("where do you want the turtle y axis to be"))
+        x_axis = input("where do you want the turtle x axis to be")
+        y_axis = input("where do you want the turtle y axis to be")
+        if x_axis in varible_value:
+         try:
+            x_axis = int(varible_value[x_axis])
             if loop_on:
-                loop.append("goto")
                 l_gox_dict[str(loop_index)].append(x_axis)
-                l_goy_dict[str(loop_index)].append(y_axis)
             elif function_on:
-                f_info.append("goto")
                 f_gox_dict[function_name].append(x_axis)
-                f_goy_dict[function_name].append(y_axis)
             else:
                 gox.append(x_axis)
+         except:
+          try:
+            x_axis = float(varible_value[x_axis])
+            if loop_on:
+                l_gox_dict[str(loop_index)].append(x_axis)
+            elif function_on:
+                f_gox_dict[function_name].append(x_axis)
+            else:
+                gox.append(x_axis)
+          except:
+            print("syntax error make sure your x axis varible is a number or decimal")
+        
+        else:
+         try:
+            x_axis = int(x_axis)
+            if loop_on:
+                l_gox_dict[str(loop_index)].append(x_axis)
+            elif function_on:
+                f_gox_dict[function_name].append(x_axis)
+            else:
+                gox.append(x_axis)
+         except:
+          try:
+            x_axis = float(x_axis)
+            if loop_on:
+                l_gox_dict[str(loop_index)].append(x_axis)
+            elif function_on:
+                f_gox_dict[function_name].append(x_axis)
+            else:
+                gox.append(x_axis)
+          except:
+             print("syntax error make sure your y axis varible is a number")
+
+        if y_axis in varible_value:
+         try:
+            y_axis = int(varible_value[y_axis])
+            if loop_on:
+                l_goy_dict[str(loop_index)].append(y_axis)
+            elif function_on:
+                f_goy_dict[function_name].append(y_axis)
+            else:
                 goy.append(y_axis)
+         except:
+            try:
+             y_axis = float(varible_value[y_axis])
+             if loop_on:
+                l_goy_dict[str(loop_index)].append(y_axis)
+             elif function_on:
+                f_goy_dict[function_name].append(y_axis)
+             else:
+                goy.append(y_axis)
+            except:
+             print("syntax error make sure your varible is a number or decimal")
+
+        else:
+         try:
+            y_axis = int(y_axis)
+            if loop_on:
+                l_goy_dict[str(loop_index)].append(y_axis)
+            elif function_on:
+                f_goy_dict[function_name].append(y_axis)
+            else:
+                goy.append(y_axis)
+         except:
+            try:
+             y_axis = float(y_axis)
+             if loop_on:
+                l_goy_dict[str(loop_index)].append(y_axis)
+             elif function_on:
+                f_goy_dict[function_name].append(y_axis)
+             else:
+                goy.append(y_axis)
+            except:
+             print("syntax error make sure you typed a number")
+
+        try: 
+         if x_axis == int(x_axis) or x_axis == float(x_axis) and y_axis == int(y_axis) or y_axis == float(y_axis):
+            if loop_on:
+                loop.append("goto")
+            elif function_on:
+                f_info.append("goto")
+                f_gox_dict[function_name].append(y_axis)
+            else:
                 code.append("goto")
         except:
-            print("syntax error make sure you typed a number")
-
+           pass
     elif line == "start_loop":
         loops = int(input("how much loops do you want"))
         looping.append(loops)
@@ -375,6 +467,7 @@ while run:
     elif line == "subtraction":
       subtract_inputs = input("type the numbers you want to subtract and to seperate them use spaces ")
       list_subtract = subtract_inputs.split()
+      value = list_subtract[0]
       for x in range(0, len(list_subtract)):
              try:
               list_subtract[x] = int(list_subtract[x])
@@ -386,76 +479,34 @@ while run:
                 list_subtract[x] = varible_value[list_subtract[x]]
                else:
                 print(str(list_subtract[0]) + " is not a varible or a number or a decimall or varibal is a string")
-      value = list_subtract[0]
-      for a in range(1 , len(list_subtract)):
+
+      for i in range(1 , len(list_subtract)):
        try:
-        value = value - list_subtract[a]
-        if a == len(list_subtract)-1:
+        value = value - list_subtract[i]
+        print(i)
+        print()
+        if i == len(list_subtract)-1:
          print("the value is: " + str(value))
        except:
-         print(str(list_subtract[a]) + " is not a varible or a number or a decimall or varibal is a string")
+         print(str(list_subtract[i]) + " is not a varible or a number or a decimall or varibal is a string")
 
     elif line == "multiplication":
-     multiply_inputs = input("type the numbers you want to multiply and to seperate them use spaces ")
-     list_multiply = multiply_inputs.split()
-
-     # convert each item safely
-     for x in range(len(list_multiply)):
-        try:
-            list_multiply[x] = int(list_multiply[x])
-        except:
-            try:
-                list_multiply[x] = float(list_multiply[x])
-            except:
-                if list_multiply[x] in varible_value:
-                    list_multiply[x] = varible_value[list_multiply[x]]
-                else:
-                    print(str(list_multiply[x]) + " is not a varible or a number or a decimall or varibal is a string")
-                    break
-
-     # start with the first value
-     value = list_multiply[0]
-
-     # multiply through the rest
-     for i in range(1, len(list_multiply)):
-        try:
+        multiply_inputs = input("type the numbers you want to multiply a0nd to seperate them use spaces ")
+        list_multiply = multiply_inputs.split()
+        value = int(list_multiply[0])
+        for i in range(1 , len(list_multiply)):
+            list_multiply[i] = int(list_multiply[i])
             value = value * list_multiply[i]
-            if i == len(list_multiply) - 1:
-                print("the value is: " + str(value))
-        except:
-            print(str(list_multiply[i]) + " is not a varible or a number or a decimall or varibal is a string")
-
+        print("the value is: " + str(value))
 
     elif line == "division":
-     divide_inputs = input("type the numbers you want to divide and to seperate them use spaces ")
-     list_divide = divide_inputs.split()
-
-    # convert each item safely
-     for x in range(len(list_divide)):
-        try:
-            list_divide[x] = int(list_divide[x])
-        except:
-            try:
-                list_divide[x] = float(list_divide[x])
-            except:
-                if list_divide[x] in varible_value:
-                    list_divide[x] = varible_value[list_divide[x]]
-                else:
-                    print(str(list_divide[x]) + " is not a varible or a number or a decimall or varibal is a string")
-                    break
-
-    # start with the first value
-     value = list_divide[0]
-
-    # divide through the rest
-     for i in range(1, len(list_divide)):
-        try:
+        divide_inputs = input("type the numbers you want to divide and to seperate them use spaces ")
+        list_divide = divide_inputs.split()
+        value = int(list_divide[0])
+        for i in range(1 , len(list_divide)):
+            list_divide[i] = int(list_divide[i])
             value = value / list_divide[i]
-            if i == len(list_divide) - 1:
-                print("the value is: " + str(value))
-        except:
-            print(str(list_divide[i]) + " is not a varible or a number or a decimall or varibal is a string")
-
+        print("the value is: " + str(value))
 
     elif line == "varible":
      varible_name = input("what do you want your varible name to be ")

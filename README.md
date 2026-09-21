@@ -20,4 +20,10 @@ top 5 basic fetures i have added that are use full for drawing:
 
 top 5 advance fetures i have added:
 
-if you want to create or change a varible type varible and then enter the varible name then enter it value the varibel is global so you dont need to worry about it being in functions
+1.if you want to create or change a varible type varible and then enter the varible name then enter it value the varibel is global so you dont need to worry about it being in functions
+
+2.to use a function you have to type start_function and type the name of the function and the type the code once your done type end_function and type the function name to call it
+
+3.you can also use loops the same way as start function but instead you need to type start_loop then enter howuch times you want the code to loop then enter your code and finish it of with end_loop
+
+4. if you want to do operations you have to type addition or subtraction or multiplication or division the after you chose that enter the digit you want to subtract or add or divide or multiply and generate them with spaces

@@ -27,3 +27,5 @@ top 5 advance fetures i have added:
 3.you can also use loops the same way as start function but instead you need to type start_loop then enter howuch times you want the code to loop then enter your code and finish it of with end_loop
 
 4. if you want to do operations you have to type addition or subtraction or multiplication or division the after you chose that enter the digit you want to subtract or add or divide or multiply and generate them with spaces
+
+5.instead of typing forward, backward, right, and left you can type goto which ask what you want the x axis and then your y axis and it will go there.

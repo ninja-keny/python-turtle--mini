@@ -69,6 +69,62 @@ loop_on = False
 function_on = False
 function_name = ""
 
+# functions
+def list_appender(line, loop, f_info, varible_value, forward_distance, f_forward, l_forward, code, loop_index, function_name, function_on, loop_on):
+
+    if line == "penup":
+        if loop_on:
+            loop.append("penup")
+            return loop
+        elif function_on:
+            f_info.append("penup")
+            return f_info
+        else:
+            code.append("penup")
+            return code
+
+    if line == "pendown":
+        if loop_on:
+            loop.append("pendown")
+            return loop
+        elif function_on:
+            f_info.append("pendown")
+            return f_info
+        else:
+            code.append("pendown")
+            return code
+
+    if line == "forward":
+        forward_num = input("how much steps do you want the turtle to move ")
+        try:
+            forward_num = int(forward_num)
+        except:
+            try:
+                forward_num = float(forward_num)
+            except:
+                if forward_num in varible_value:
+                    forward_num = varible_value[forward_num]
+                else:
+                    print("syntax error: must be number or variable")
+                    return
+
+        if loop_on:
+            loop.append("forward")
+            l_forward[str(loop_index)].append(forward_num)
+            return loop, l_forward
+
+        elif function_on:
+            f_info.append("forward")
+            f_forward[function_name].append(forward_num)
+            return f_info, f_forward
+
+        else:
+            forward_distance.append(forward_num)
+            code.append("forward")
+            return code, forward_distance
+
+
+    
 # INPUT LOOP
 while run:
     line = input("line "+str(line_name)+":")
@@ -79,35 +135,7 @@ while run:
         run = False
 
     elif line == "forward":
-            forward_num = input("how much steps do you want the turtle to move ")
-            try:
-             forward_num = int(forward_num)
-             if loop_on:
-                loop.append("forward")
-                l_forward[str(loop_index)].append(forward_num)
-             elif function_on:
-                f_info.append("forward")
-                f_forward[function_name].append(forward_num)
-             else:
-                forward_distance.append(forward_num)
-                code.append("forward")
-            except:
-               try:
-                  forward_num = float(forward_num)
-               except:
-                if forward_num in varible_value:
-                  forward_num = varible_value[forward_num]
-                  if loop_on:
-                   loop.append("forward")
-                   l_forward[str(loop_index)].append(forward_num)
-                  elif function_on:
-                   f_info.append("forward")
-                   f_forward[function_name].append(forward_num)
-                  else:
-                   forward_distance.append(forward_num)
-                   code.append("forward")
-                else:                
-                 print("syntax error make sure you typed a number or varible")
+        list_appender(line,loop,f_info,varible_value,forward_distance,f_forward,l_forward,code,loop_index,function_name,function_on,loop_on)
 
     elif line == "backward":
      backward_num = input("how much steps do you want the turtle to move ")
@@ -231,20 +259,10 @@ while run:
 
 
     elif line == "penup":
-        if loop_on:
-            loop.append("penup")
-        elif function_on:
-            f_info.append("penup")
-        else:
-            code.append("penup")
+        list_appender(line,f_info,loop)
 
     elif line == "pendown":
-        if loop_on:
-            loop.append("pendown")
-        elif function_on:
-            f_info.append("pendown")
-        else:
-            code.append("pendown")
+        list_appender(line,f_info,loop)
 
     elif line == "color":
          turtle_color = input("what color do you want the turtle to be")
@@ -259,8 +277,10 @@ while run:
             else:
                 color_chosen.append(varible_value[turtle_color])
                 code.append("color")
+
           else:
              print("error: has to be a string it cant be a number or decimal or your varible is not a color")
+
          elif turtle_color in color_list:
             if loop_on:
                 loop.append("color")

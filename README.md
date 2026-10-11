@@ -14,7 +14,7 @@ top 5 basic fetures i have added that are use full for drawing:
 
 3.if you want to turn left you have to type left and enter how much degrease you want
 
-4. if you want to move forward you have to type forwards and enter the distance
+4. if you want to move backward you have to type backwards and enter the distance
 
 5. if you wamt to color the turtle you have to type color and enter what color you want the turtle to be
 

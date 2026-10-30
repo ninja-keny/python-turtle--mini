@@ -70,7 +70,7 @@ function_on = False
 function_name = ""
 
 # functions
-def list_appender(line, loop, f_info, varible_value, forward_distance, f_forward, l_forward, code, loop_index, function_name, function_on, loop_on):
+def list_appender(line, loop, f_info, varible_value, forward_distance, f_forward, l_forward, code, loop_index, function_name, function_on, loop_on, backward_distance,l_backward,f_backward,l_right,f_right):
 
     if line == "penup":
         if loop_on:
@@ -122,62 +122,37 @@ def list_appender(line, loop, f_info, varible_value, forward_distance, f_forward
             forward_distance.append(forward_num)
             code.append("forward")
             return code, forward_distance
+        
+    if line == "backward":
+        backward_num = input("how much steps do you want the turtle to move backwards ")
+        try:
+            backward_num = int(backward_num)
+        except:
+            try:
+                backward_num = float(backward_num)
+            except:
+                if backward_num in varible_value:
+                    backward_num = varible_value[backward_num]
+                else:
+                    print("syntax error: must be number or variable")
+                    return
 
-
-    
-# INPUT LOOP
-while run:
-    line = input("line "+str(line_name)+":")
-    line_name += 1
-
-    # if user types run to run the code
-    if line == "run":
-        run = False
-
-    elif line == "forward":
-        list_appender(line,loop,f_info,varible_value,forward_distance,f_forward,l_forward,code,loop_index,function_name,function_on,loop_on)
-
-    elif line == "backward":
-     backward_num = input("how much steps do you want the turtle to move ")
-     try:
-        backward_num = int(backward_num)
         if loop_on:
             loop.append("backward")
             l_backward[str(loop_index)].append(backward_num)
+            return loop, l_backward
+
         elif function_on:
             f_info.append("backward")
             f_backward[function_name].append(backward_num)
+            return f_info, f_backward
+
         else:
             backward_distance.append(backward_num)
             code.append("backward")
-     except:
-        try:
-            backward_num = float(backward_num)
-            if loop_on:
-                loop.append("backward")
-                l_backward[str(loop_index)].append(backward_num)
-            elif function_on:
-                f_info.append("backward")
-                f_backward[function_name].append(backward_num)
-            else:
-                backward_distance.append(backward_num)
-                code.append("backward")
-        except:
-            if backward_num in varible_value:
-                backward_num = varible_value[backward_num]
-                if loop_on:
-                    loop.append("backward")
-                    l_backward[str(loop_index)].append(backward_num)
-                elif function_on:
-                    f_info.append("backward")
-                    f_backward[function_name].append(backward_num)
-                else:
-                    backward_distance.append(backward_num)
-                    code.append("backward")
-            else:
-                print("syntax error make sure you typed a number or varible")
+            return code, backward_distance
 
-    elif line == "right":
+    if line == "right":
      right_num = input("how much degrees do you want the turtle to turn right ")
      try:
         right_num = int(right_num)
@@ -216,6 +191,33 @@ while run:
                     code.append("right")
             else:
                 print("syntax error make sure you typed a number or varible")
+
+
+    
+# INPUT LOOP
+while run:
+    line = input("line "+str(line_name)+":")
+    line_name += 1
+
+    # if user types run to run the code
+    if line == "run":
+      if function_on == True:
+        print("make sure you have an end function command at the bottom of your function so your code can run")
+      elif loop_on == True:
+        print("make sure you have an end loop command at the bottom of your loop so your code can run")
+      else:
+       run = False
+
+    elif line == "forward":
+        list_appender(line, loop, f_info, varible_value, forward_distance, f_forward, l_forward, code, loop_index, function_name, function_on, loop_on, backward_distance,l_backward,f_backward,l_right,f_right)
+
+    elif line == "backward":
+        list_appender(line, loop, f_info, varible_value, forward_distance, f_forward, l_forward, code, loop_index, function_name, function_on, loop_on, backward_distance,l_backward,f_backward,l_right,f_right)
+
+
+    elif line == "right":
+       list_appender(line, loop, f_info, varible_value, forward_distance, f_forward, l_forward, code, loop_index, function_name, function_on, loop_on, backward_distance,l_backward,f_backward,l_right,f_right)
+
     
     elif line == "left":
      left_num = input("how much degrees do you want the turtle to turn left ")
@@ -259,10 +261,10 @@ while run:
 
 
     elif line == "penup":
-        list_appender(line,f_info,loop)
+        list_appender(line, loop, f_info, varible_value, forward_distance, f_forward, l_forward, code, loop_index, function_name, function_on, loop_on, backward_distance,l_backward,f_backward)
 
     elif line == "pendown":
-        list_appender(line,f_info,loop)
+        list_appender(line, loop, f_info, varible_value, forward_distance, f_forward, l_forward, code, loop_index, function_name, function_on, loop_on, backward_distance,l_backward,f_backward)
 
     elif line == "color":
          turtle_color = input("what color do you want the turtle to be")
@@ -351,7 +353,7 @@ while run:
             else:
                 gox.append(x_axis)
           except:
-             print("syntax error make sure your y axis varible is a number")
+             print("syntax error make sure your x axis varible is a number")
 
         if y_axis in varible_value:
          try:
@@ -401,7 +403,6 @@ while run:
                 loop.append("goto")
             elif function_on:
                 f_info.append("goto")
-                f_gox_dict[function_name].append(y_axis)
             else:
                 code.append("goto")
         except:
@@ -447,7 +448,6 @@ while run:
         f_gox_dict[function_name] = []
         f_goy_dict[function_name] = []
 
-        code.append(function_name)
 
     elif line == "end_function":
         if function_on:
@@ -520,13 +520,35 @@ while run:
         print("the value is: " + str(value))
 
     elif line == "division":
-        divide_inputs = input("type the numbers you want to divide and to seperate them use spaces ")
-        list_divide = divide_inputs.split()
-        value = int(list_divide[0])
-        for i in range(1 , len(list_divide)):
-            list_divide[i] = int(list_divide[i])
+     divide_inputs = input("type the numbers you want to divide and to seperate them use spaces ")
+     list_divide = divide_inputs.split()
+     for i in range(0 , len(list_divide)):
+            try:
+             list_divide[i] = int(list_divide[i])
+             if i == 0:
+                value = list_divide[i]
+            except:
+               try:
+                  list_divide[i] = float(list_divide[i])
+                  if i == 0:
+                    value = list_divide[i]
+               except:
+                try:
+                  if list_divide[i] in varible_value:
+                     list_divide[i] = varible_value[list_divide[i]]
+                     if i == 0:
+                      value = list_divide[i]
+                except:
+                   print("you need to type a number or varible it cant be "+str(list_divide[i]))
+     try:
+      for i in range(1,len(list_divide)):
+            if list_divide[i] == 0:
+                print("you cant divide by 0")
+                break
             value = value / list_divide[i]
-        print("the value is: " + str(value))
+      print("the value is: " + str(value))
+     except:
+      pass
 
     elif line == "varible":
      varible_name = input("what do you want your varible name to be ")
@@ -619,8 +641,11 @@ while i < len(code):
                      turtle.left(l_left[str(a)][loop_k-1])
 
                 elif loop_list[str(a)][j] == "color":
-                    turtle.color(l_color[str(a)][loop_l-1])
+                  try:
+                    turtle.color(l_color[str(a)][loop_l])
                     loop_l += 1
+                  except:
+                    turtle.color(l_color[str(a)][loop_l-1])
 
                 elif loop_list[str(a)][j] == "penup":
                     turtle.penup()

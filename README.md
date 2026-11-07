@@ -1,5 +1,6 @@
 # python‑turtle‑mini  
 please report any bugs!
+here the website version explaining it also https://ninja-keny.github.io/best-projects-from-every-year/python_turtle_project.html
 It is my version of Python Turtle, and it has different commands. Soon it will have built in functions.
 It already has loops and functions. It’s meant for people who struggle to code, or it can be used to learn how to code when I add the built‑in functions.
 People who are more advanced can use my programming language to code quick and easy stuff.
